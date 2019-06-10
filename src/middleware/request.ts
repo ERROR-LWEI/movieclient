@@ -11,4 +11,10 @@ export interface RequestParam {
 
 export default function request(params: RequestParam) {
   const { body ={} , method, headers, ...config} =  params;
+
+  const request = {
+    
+  }
+
+  return fetch()
 }
