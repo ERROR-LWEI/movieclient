@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import request from '@/middleware/request';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -12,11 +13,17 @@ Component.registerHooks([
   'beforeRouteUpdate',
 ]);
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const toPath = to.path,
         fromPath = from.path;
-  console.log('to', toPath);
-  console.log('from', fromPath);
+  if (toPath.indexOf('/user') < 0) {
+    const { code } = await request({
+      api: '/api/user/getUser',
+    });
+    if (code === 401) {
+      next('/user/login');
+    }
+  }
   next();
 })
 

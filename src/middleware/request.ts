@@ -1,5 +1,6 @@
 import fetch from './fetch';
-import { Method } from 'axios';
+import { Method, AxiosRequestConfig } from 'axios';
+import { paramsToApi } from '@/utils';
 
 export interface RequestParam {
   api: string;
@@ -10,11 +11,15 @@ export interface RequestParam {
 }
 
 export default function request(params: RequestParam) {
-  const { body ={} , method, headers, ...config} =  params;
+  const { body ={} , method = 'GET', query, ...config} =  params;
+  const url = paramsToApi(params);
 
-  const request = {
-    
+  const request: AxiosRequestConfig = {
+    url: url,
+    method: method,
+    data: body,
+    ...config,
   }
 
-  return fetch()
+  return fetch(request);
 }

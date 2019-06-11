@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-
+import { errorCompatibleWith } from '@/utils';
 
 Axios.interceptors.response.use((response: AxiosResponse): Promise<any> => {
   const { code, message, ...props } = response.data;
@@ -10,9 +10,10 @@ Axios.interceptors.response.use((response: AxiosResponse): Promise<any> => {
     ...props,
   })
 }, (error): Promise<any> => {
-  return Promise.reject({
-    code: error.response.status,
-    message: error.message,
+  const { code, message } = errorCompatibleWith(error);
+  return Promise.resolve({
+    code: code,
+    message: message,
     type: 'ERROR',
   })
 });

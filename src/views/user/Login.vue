@@ -10,7 +10,7 @@
                     <a-input
                         size="large"
                         v-decorator="[
-                            'note',
+                            'account',
                             {rules: [{ required: true, message: 'Please input your note!' }]}
                         ]"
                         type="text"
@@ -27,7 +27,7 @@
                     <a-input
                         size="large"
                         v-decorator="[
-                            'note2',
+                            'password',
                             {rules: [{ required: true, message: 'Please input your note!' }]}
                         ]"
                         type="password"
@@ -77,6 +77,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Form, Input, Icon, Checkbox, Button } from 'ant-design-vue';
+import request from '@/middleware/request';
 const { Item } = Form;
 @Component({
     components: {
@@ -99,11 +100,20 @@ export default class Login extends Vue {
         this.form = this.$form.createForm(this);
     }
 
+    async login(param: any) {
+        const res = await request({
+            api: '/api/user/login',
+            method: 'POST',
+            body: param
+        });
+        console.log(res);
+    }
+
     handleSubmit(e:any): void {
         e.preventDefault();
         this.form.validateFields((err, values) => {
             if (!err) {
-            console.log('Received values of form: ', values);
+                this.login(values);
             }
         });
     }
