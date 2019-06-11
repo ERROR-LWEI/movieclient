@@ -66,7 +66,7 @@
                     >
                         登录
                     </a-button>
-                    <a href="">
+                    <a href="/user/sigin">
                         现在注册!
                     </a>
                 </a-form-item>
