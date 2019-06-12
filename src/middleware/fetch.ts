@@ -2,7 +2,10 @@ import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { errorCompatibleWith } from '@/utils';
 
 Axios.interceptors.response.use((response: AxiosResponse): Promise<any> => {
-  const { code, message, ...props } = response.data;
+  const { code, message, token, ...props } = response.data;
+  if (token) {
+    Axios.defaults.headers['Authorization'] = token;
+  }
   return Promise.resolve({
     code: code,
     message: message,

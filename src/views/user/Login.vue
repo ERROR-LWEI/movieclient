@@ -14,6 +14,7 @@
                             {rules: [{ required: true, message: 'Please input your note!' }]}
                         ]"
                         type="text"
+                        class="formInput"
                         placeholder="用户名"
                     >
                         <a-icon
@@ -31,6 +32,7 @@
                             {rules: [{ required: true, message: 'Please input your note!' }]}
                         ]"
                         type="password"
+                        class="formInput"
                         placeholder="密码"
                     >
                         <a-icon
@@ -42,7 +44,7 @@
                     </a-input>
                 </a-form-item>
                 <a-form-item>
-                    <a-checkbox
+                    <!-- <a-checkbox
                         v-decorator="[
                         'remember',
                         {
@@ -58,17 +60,17 @@
                         href=""
                     >
                         忘记密码
-                    </a>
+                    </a> -->
                     <a-button
                         type="primary"
                         html-type="submit"
                         class="login-form-button"
                     >
-                        登录
+                        LOGIN
                     </a-button>
-                    <a href="/user/sigin">
+                    <!-- <a href="/user/sigin">
                         现在注册!
-                    </a>
+                    </a> -->
                 </a-form-item>
             </a-form>
         </div>
@@ -127,7 +129,7 @@ export default class Login extends Vue {
     padding: 40px 20px 20px 20px;
     border-radius: 6px;
     background: @colorOne;
-    box-shadow: @boxShadowOne;
+    box-shadow: @boxShadowOne #656363;
 
     h1 {
         font-family: "square";
@@ -150,13 +152,26 @@ export default class Login extends Vue {
     .form {
         padding: 20px 20px;
 
+        .ant-input {
+            border: 1px solid #ddd;
+        }
+        input {
+            border:1px solid red;
+        }
+
         .login-form-forgot {
             float: right;
         }
 
         .login-form-button {
+            font-family: "ITCAvantGardeProReg";
+            font-weight: 900;
+            letter-spacing: 4px;
             width: 100%;
+            height: 40px;
             font-size: 16px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px 2px #505050;
         }
     }
 }

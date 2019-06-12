@@ -2,6 +2,14 @@ module.exports = {
     css: {
       loaderOptions: {
         less: {
+          modifyVars: {
+            'primary-color': '#052763',
+            'link-color': '#1DA57A',
+            'border-radius-base': '2px',
+            'slider-handle-color-focus': '#fff',
+            'slider-handle-color-focus-shadow': '#fff',
+            'input-border-color': '#fff',
+          },
           javascriptEnabled: true
         }
       }
