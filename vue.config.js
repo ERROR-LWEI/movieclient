@@ -8,7 +8,6 @@ module.exports = {
             'border-radius-base': '2px',
             'slider-handle-color-focus': '#fff',
             'slider-handle-color-focus-shadow': '#fff',
-            'input-border-color': '#fff',
           },
           javascriptEnabled: true
         }

@@ -20,6 +20,7 @@ router.beforeEach(async (to, from, next) => {
     const { code } = await request({
       api: '/api/user/getUser',
     });
+    console.log(code);
     if (code === 401) {
       next('/user/login');
     }

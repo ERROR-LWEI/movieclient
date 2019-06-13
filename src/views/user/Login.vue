@@ -113,7 +113,7 @@ export default class Login extends Vue {
 
     handleSubmit(e:any): void {
         e.preventDefault();
-        this.form.validateFields((err, values) => {
+        this.form.validateFields((err: any, values: any) => {
             if (!err) {
                 this.login(values);
             }
@@ -129,7 +129,8 @@ export default class Login extends Vue {
     padding: 40px 20px 20px 20px;
     border-radius: 6px;
     background: @colorOne;
-    box-shadow: @boxShadowOne #656363;
+    background-size: cover;
+    box-shadow: @boxShadowOne #545454;
 
     h1 {
         font-family: "square";
@@ -154,9 +155,6 @@ export default class Login extends Vue {
 
         .ant-input {
             border: 1px solid #ddd;
-        }
-        input {
-            border:1px solid red;
         }
 
         .login-form-forgot {
