@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 @Component({
@@ -14,5 +15,14 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
     HelloWorld,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+        constructor() { super(); }
+    beforeRouteLeave (to: Route, from: Route , next: () => void): void {
+        next()
+    }
+
+    beforeRouteEnter (to: Route, from: Route, next: () => void): void {
+        next();
+    }
+}
 </script>

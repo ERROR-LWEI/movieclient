@@ -31,7 +31,7 @@
                             'password',
                             {rules: [{ required: true, message: 'Please input your note!' }]}
                         ]"
-                        type="password"
+                        :type="inputType"
                         class="formInput"
                         placeholder="密码"
                     >
@@ -40,44 +40,25 @@
                             type="lock"
                             style="color: rgba(0,0,0,.25)"
                         />
-                        <a-icon slot="suffix" type="eye"/>
+                        <a-icon slot="suffix" @click="click" :type="type"/>
                     </a-input>
                 </a-form-item>
                 <a-form-item>
-                    <!-- <a-checkbox
-                        v-decorator="[
-                        'remember',
-                        {
-                            valuePropName: 'checked',
-                            initialValue: true,
-                        }
-                        ]"
-                    >
-                        记住我
-                    </a-checkbox>
-                    <a
-                        class="login-form-forgot"
-                        href=""
-                    >
-                        忘记密码
-                    </a> -->
                     <a-button
                         type="primary"
                         html-type="submit"
                         class="login-form-button"
+                        :loading="isLoading"
                     >
                         LOGIN
                     </a-button>
-                    <!-- <a href="/user/sigin">
-                        现在注册!
-                    </a> -->
                 </a-form-item>
             </a-form>
         </div>
     </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Emit, Model, Watch, Provide } from 'vue-property-decorator';
 import { Form, Input, Icon, Checkbox, Button } from 'ant-design-vue';
 import request from '@/middleware/request';
 const { Item } = Form;
@@ -92,23 +73,38 @@ const { Item } = Form;
     }
 })
 export default class Login extends Vue {
-    constructor() {
-        super();
-    }
-
-    form: any;
+    @Provide() form: any;
+    @Provide() isEye: Boolean = false;
+    @Provide() type: string = 'eye-invisible';
+    @Provide() inputType: string = 'password';
+    @Provide() isLoading: Boolean = false;
 
     beforeCreate () {
         this.form = this.$form.createForm(this);
     }
 
+    @Emit('click')
+    click() {
+        this.isEye = !this.isEye;
+    }
+
+    @Watch('isEye')
+    watchEye(val: Boolean, old: Boolean) {
+        this.type = (!this.isEye ? 'eye' : 'eye-invisible');
+        this.inputType = (!this.isEye ? 'text': 'password');
+    }
+
     async login(param: any) {
+        this.isLoading = true;
         const res = await request({
             api: '/api/user/login',
             method: 'POST',
             body: param
         });
-        console.log(res);
+        this.isLoading = false;
+        if (res.code === 1) {
+            this.$router.push('/home');
+        }
     }
 
     handleSubmit(e:any): void {
@@ -121,8 +117,14 @@ export default class Login extends Vue {
     }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import '../../assets/design/index.less';
+body .form {
+    .ant-input {
+         font-family: "square";
+         font-weight: 900;
+    }
+}
 .Login {
     width: 100%;
     height: 100%;
@@ -130,7 +132,7 @@ export default class Login extends Vue {
     border-radius: 6px;
     background: @colorOne;
     background-size: cover;
-    box-shadow: @boxShadowOne #545454;
+    box-shadow: @boxShadowOne @colorTwo;
 
     h1 {
         font-family: "square";
@@ -153,10 +155,6 @@ export default class Login extends Vue {
     .form {
         padding: 20px 20px;
 
-        .ant-input {
-            border: 1px solid #ddd;
-        }
-
         .login-form-forgot {
             float: right;
         }
@@ -166,9 +164,9 @@ export default class Login extends Vue {
             font-weight: 900;
             letter-spacing: 4px;
             width: 100%;
-            height: 40px;
+            height: 50px;
             font-size: 16px;
-            border-radius: 20px;
+            border-radius: 30px;
             box-shadow: 0 5px 15px 2px #505050;
         }
     }

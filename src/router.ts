@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/views/Home.vue';
 import BasicLayout from '@/Layout/BasicLayout.vue';
 import UserLayout from '@/Layout/UserLayout.vue';
 
@@ -13,12 +12,20 @@ export default new Router({
     {
       path: '/',
       name: 'Basic',
-      component: BasicLayout,
+      component: () => import('@/Layout/BasicLayout.vue'),
+      meta: {
+        isAuth: '是'
+      },
       children: [
         {
           path: 'home',
           name: 'home',
-          component: Home,
+          component: () => import('./views/Home.vue'),
+        },
+        {
+          path: 'about',
+          name: 'about',
+          component: () => import('./views/About.vue'),
         }
       ]
     },

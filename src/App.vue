@@ -1,12 +1,27 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <router-view/>
+    <transition name="fade">
+            <router-view/>
+    </transition>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component({})
+export default class App extends Vue {
+  constructor() {
+    super();
+  }
+
+  beforeRouteUpdate (to:any, from:any, next:any) {
+
+    next();
+  }
+}
+</script>
+
 
 <style lang="less">
 :global {
@@ -32,5 +47,11 @@
       color: #42b983;
     }
   }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

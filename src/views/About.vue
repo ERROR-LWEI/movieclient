@@ -11,14 +11,9 @@ import { Route } from 'vue-router';
 @Component({})
 export default class About extends Vue {
     constructor() { super(); }
-    // beforeRouteLeave (to: Route, from: Route , next: () => void): void {
-    //     const answer = window.confirm('Do you really want to leave? you have unsaved changes!')
-    //     if (answer) {
-    //         next()
-    //     } else {
-    //         next();
-    //     }
-    // }
+    beforeRouteLeave (to: Route, from: Route , next: () => void): void {
+        next()
+    }
 
     beforeRouteEnter (to: Route, from: Route, next: () => void): void {
         next();
