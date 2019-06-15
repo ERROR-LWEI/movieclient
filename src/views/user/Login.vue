@@ -1,9 +1,6 @@
 <template>
     <div class="Login">
-        <h1>
-            <i class="logo"></i>
-            <span>百安居测试平台</span>
-        </h1>
+        <div class="logo"></div>
         <div class="form">
             <a-form :form="form" @submit="handleSubmit">
                 <a-form-item>
@@ -11,11 +8,14 @@
                         size="large"
                         v-decorator="[
                             'account',
-                            {rules: [{ required: true, message: 'Please input your note!' }]}
+                            {
+                                rules: [{ type: 'email', required: true, message: '请输入邮箱地址' }],
+                                validateTrigger: 'submit'
+                            }
                         ]"
                         type="text"
                         class="formInput"
-                        placeholder="用户名"
+                        placeholder="Email"
                     >
                         <a-icon
                             slot="prefix"
@@ -29,18 +29,21 @@
                         size="large"
                         v-decorator="[
                             'password',
-                            {rules: [{ required: true, message: 'Please input your note!' }]}
+                            {
+                                rules: [{ required: true, message: 'Please input your note!' }],
+                                validateTrigger: 'submit'
+                            }
                         ]"
                         :type="inputType"
                         class="formInput"
-                        placeholder="密码"
+                        placeholder="Password"
                     >
                         <a-icon
                             slot="prefix"
                             type="lock"
                             style="color: rgba(0,0,0,.25)"
                         />
-                        <a-icon slot="suffix" @click="click" :type="type"/>
+                        <a-icon slot="suffix" @click="click" :type="type" style="cursor:pointer"/>
                     </a-input>
                 </a-form-item>
                 <a-form-item>
@@ -54,6 +57,7 @@
                     </a-button>
                 </a-form-item>
             </a-form>
+            <div><a-icon type="weibo-circle" /></div>
         </div>
     </div>
 </template>
@@ -61,6 +65,7 @@
 import { Component, Vue, Emit, Model, Watch, Provide } from 'vue-property-decorator';
 import { Form, Input, Icon, Checkbox, Button } from 'ant-design-vue';
 import request from '@/middleware/request';
+import { Route } from 'vue-router';
 const { Item } = Form;
 @Component({
     components: {
@@ -83,6 +88,13 @@ export default class Login extends Vue {
         this.form = this.$form.createForm(this);
     }
 
+    beforeRouteEnter(to: Route, from: Route, next: any) {
+        console.log('to', to);
+        console.log('');
+        console.log('from', from);
+        next();
+    }
+
     @Emit('click')
     click() {
         this.isEye = !this.isEye;
@@ -92,6 +104,13 @@ export default class Login extends Vue {
     watchEye(val: Boolean, old: Boolean) {
         this.type = (!this.isEye ? 'eye' : 'eye-invisible');
         this.inputType = (!this.isEye ? 'text': 'password');
+    }
+
+    @Watch('$route')
+    watchRoute(val: any, old: any) {
+        console.log('val', val);
+        console.log('');
+        console.log('old', val);
     }
 
     async login(param: any) {
@@ -123,35 +142,45 @@ body .form {
     .ant-input {
          font-family: "square";
          font-weight: 900;
+         height: 45px;
+         border-radius: 20px;
     }
 }
 .Login {
     width: 100%;
     height: 100%;
-    padding: 40px 20px 20px 20px;
+    padding: 50px 20px 20px 20px;
     border-radius: 6px;
     background: @colorOne;
     background-size: cover;
     box-shadow: @boxShadowOne @colorTwo;
+    position: relative;
 
-    h1 {
-        font-family: "square";
-        font-weight: bold;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-evenly;
-        padding: 0 20px;
-        .logo {
-            display: inline-block;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: @logoImg;
-            background-size: 100%;
+    .logo {
+        width:  100px;
+        height: 100px;
+        border-radius: 50px;
+        position: absolute;
+        top: -50px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0 auto;
+        background: #ddd;
+        background: @logoImg;
+        border: 2px solid #fff;
+        background-size: 100%;
+        transition: all .2s linear;
+
+        &:hover {
+            top: -60px;
+            width: 110px;
+            height: 110px;
+            border-radius: 55px;
+            box-shadow: 0 4px 10px 2px #52525245;
+            transition: all .2s linear;
         }
     }
-
     .form {
         padding: 20px 20px;
 
@@ -164,10 +193,12 @@ body .form {
             font-weight: 900;
             letter-spacing: 4px;
             width: 100%;
-            height: 50px;
+            height: 42px;
             font-size: 16px;
             border-radius: 30px;
-            box-shadow: 0 5px 15px 2px #505050;
+            &:hover {
+                box-shadow: 0 4px 10px 2px #505050;
+            }
         }
     }
 }

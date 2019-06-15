@@ -13,9 +13,7 @@ export default new Router({
       path: '/',
       name: 'Basic',
       component: () => import('@/Layout/BasicLayout.vue'),
-      meta: {
-        isAuth: '是'
-      },
+      redirect: { name: 'home' },
       children: [
         {
           path: 'home',
@@ -26,6 +24,10 @@ export default new Router({
           path: 'about',
           name: 'about',
           component: () => import('./views/About.vue'),
+        },{
+          path: 'usermessage',
+          name: 'usermessage',
+          component: () => import('./views/user/user.vue')
         }
       ]
     },
@@ -42,7 +44,7 @@ export default new Router({
           path: 'sigin',
           name: 'sigin',
           component: () => import('./views/user/Sigin.vue'),
-        },
+        }
       ],
     },
   ],

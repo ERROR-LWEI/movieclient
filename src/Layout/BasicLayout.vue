@@ -1,7 +1,9 @@
 <template>
   <Layout id="components-layout-demo-fixed">
     <Header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-      <div class="logo" />
+      <div class="logo">
+          Lemon
+      </div>
       <Menu
         theme="dark"
         mode="horizontal"
@@ -15,6 +17,7 @@
           <router-link to="/about">About</router-link>
         </MenuItem>
         <MenuItem key="3">nav 3</MenuItem>
+              <a-admin @loginout="loginout"/>
       </Menu>
     </Header>
     <Content :style="{ padding: '0 50px', marginTop: '64px' }">
@@ -34,10 +37,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Provide, Emit, Watch } from 'vue-property-decorator';
 import { Layout, Menu, Breadcrumb } from 'ant-design-vue';
 import { Route } from 'vue-router';
 import request from '@/middleware/request';
+import Admin from '@/Layout/Admin.vue';
 const { Header, Content, Footer } = Layout;
 const { Item } = Breadcrumb;
 const MenuItem = Menu.Item;
@@ -50,11 +54,13 @@ const MenuItem = Menu.Item;
     Menu, 
     Breadcrumb, 
     Item,
-    MenuItem
+    MenuItem,
+    'a-admin': Admin
   }
 })
 export default class BasicLayout extends Vue {
-  constructor() { super(); }
+  @Provide() isAuth = false;
+  @Provide() meunKey: any = 0;
 
   async beforeRouteEnter(to:any, from:any, next:any) {
     const toPath = to.path,
@@ -67,13 +73,39 @@ export default class BasicLayout extends Vue {
         next('/user/login');
       }
     }
-    next();
+    next((vm: any) => {
+      vm.isAuth = true;
+    });
   }
 
   beforeRouteUpdate (to:any, from:any, next:any) {
-    console.log('to', to);
-    console.log('from', from);
+    const { isAuth } = this;
+    if (!isAuth) {
+      next('/user/login');
+    }
     next();
+  }
+
+  @Emit('loginout')
+  async loginout() {
+    const res = await request({
+        api: '/api/user/loginout',
+        method: 'POST',
+    });
+    if (res.code === 1) {
+      this.isAuth = false;
+      this.$router.push('/user/login');
+    }
+  }
+
+  /**
+   * 路由变化监听，根据路由变化做相应操作
+   */
+  @Watch('$route')
+  watchRoute(val: any, old: any) {
+    console.log(val);
+    console.log('')
+    console.log(old);
   }
 }
 </script>
@@ -82,8 +114,11 @@ export default class BasicLayout extends Vue {
 #components-layout-demo-fixed .logo {
   width: 120px;
   height: 31px;
-  background: rgba(255,255,255,.2);
+  line-height: 31px;
   margin: 16px 24px 16px 0;
   float: left;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 31px;
+  color: #fff;
 }
 </style>

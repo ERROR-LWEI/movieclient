@@ -4,10 +4,9 @@ module.exports = {
         less: {
           modifyVars: {
             'primary-color': '#052763',
-            'link-color': '#1DA57A',
+            'item-hover-bg': '#ddd',
             'border-radius-base': '2px',
-            'slider-handle-color-focus': '#fff',
-            'slider-handle-color-focus-shadow': '#fff',
+            'input-hover-border-color': '#0d499e'
           },
           javascriptEnabled: true
         }
