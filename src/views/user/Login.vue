@@ -93,6 +93,10 @@ export default class Login extends Vue {
     }
 
     beforeRouteEnter(to: Route, from: Route, next: any) {
+        const { query: { code } } = to;
+        if (code) {
+            this.login({ type: 'weibo', code: code, url: 'www.lemonpai.cn' });
+        }
         console.log('to', to);
         console.log('');
         console.log('from', from);
@@ -122,13 +126,11 @@ export default class Login extends Vue {
     }
 
     async login(param: any) {
-        this.isLoading = true;
         const res = await request({
             api: '/api/user/login',
             method: 'POST',
             body: param
         });
-        this.isLoading = false;
         if (res.code === 1) {
             this.$router.push('/home');
         }
@@ -136,9 +138,11 @@ export default class Login extends Vue {
 
     handleSubmit(e:any): void {
         e.preventDefault();
-        this.form.validateFields((err: any, values: any) => {
+        this.form.validateFields(async (err: any, values: any) => {
             if (!err) {
-                this.login(values);
+                this.isLoading = true;
+                await this.login(values);
+                this.isLoading = false;
             }
         });
     }
