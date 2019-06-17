@@ -111,7 +111,7 @@ export default class Login extends Vue {
 
     handleSubmit(e:any): void {
         e.preventDefault();
-        this.form.validateFields((err, values) => {
+        this.form.validateFields((err: any, values: any) => {
             if (!err) {
                 this.login(values);
             }

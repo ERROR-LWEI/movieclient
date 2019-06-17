@@ -57,7 +57,11 @@
                     </a-button>
                 </a-form-item>
             </a-form>
-            <div><a-icon type="weibo-circle" /></div>
+            <div class="thirdparty">
+                <a-icon type="weibo" @click="weibologin" />
+                <a-icon type="qq" />
+                <a-icon type="wechat" />
+            </div>
         </div>
     </div>
 </template>
@@ -111,6 +115,10 @@ export default class Login extends Vue {
         console.log('val', val);
         console.log('');
         console.log('old', val);
+    }
+
+    weibologin() {
+        window.location.href = 'https://api.weibo.com/oauth2/authorize?client_id=524879129&redirect_uri=http://www.lemonpai.cn/user/login&code=CODE'
     }
 
     async login(param: any) {
@@ -183,6 +191,23 @@ body .form {
     }
     .form {
         padding: 20px 20px;
+
+        .thirdparty {
+            width: 90%;
+            margin: auto;
+            margin-top: 50px;
+            // border-top: 2px solid #cacaca;
+            padding-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+
+            & i {
+                font-size: 24px;
+                cursor: pointer;
+            }
+        }
 
         .login-form-forgot {
             float: right;
