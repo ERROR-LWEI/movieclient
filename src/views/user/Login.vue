@@ -153,8 +153,9 @@ export default class Login extends Vue {
 @import '../../assets/design/index.less';
 body .form {
     .ant-input {
-         font-family: "square";
+         font-family: "ITCAvantGardeProReg";
          font-weight: 900;
+         font-size: 20px;
          height: 45px;
          border-radius: 20px;
     }

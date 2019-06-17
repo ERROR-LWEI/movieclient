@@ -130,8 +130,9 @@ export default class Login extends Vue {
     box-shadow: @boxShadowOne;
 
     h1 {
-        font-family: "square";
+        font-family: "ITCAvantGardeProReg";
         font-weight: bold;
+        font-size: 20px;
         display: flex;
         flex-direction: row;
         align-items: center;
