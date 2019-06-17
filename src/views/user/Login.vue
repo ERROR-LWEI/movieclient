@@ -94,13 +94,14 @@ export default class Login extends Vue {
 
     beforeRouteEnter(to: Route, from: Route, next: any) {
         const { query: { code } } = to;
-        if (code) {
-            this.login({ type: 'weibo', code: code, url: 'www.lemonpai.cn' });
-        }
         console.log('to', to);
         console.log('');
         console.log('from', from);
-        next();
+        next((vm: any) => {
+            if (code) {
+                vm.login({ type: 'weibo', code: code, url: 'www.lemonpai.cn' })
+            }
+        });
     }
 
     @Emit('click')
