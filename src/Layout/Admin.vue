@@ -15,7 +15,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Provide, Emit } from 'vue-property-decorator';
-import { Dropdown, Menu, Avatar, Icon } from 'ant-design-vue'
+import { Dropdown, Menu, Avatar, Icon } from 'ant-design-vue';
 const Item = Menu.Item;
 
 @Component({
@@ -24,15 +24,15 @@ const Item = Menu.Item;
     'a-menu': Menu,
     'a-menu-item': Item,
     'a-avatar': Avatar,
-    'a-icon': Icon
-  }
+    'a-icon': Icon,
+  },
 })
 export default class Admin extends Vue {
-  @Provide() items = [
+  @Provide() public items = [
     { name: '用户', link: '/usermessage', key: 1, icon: 'user' },
     { name: '设置', link: '/setting', key: 2, icon: 'setting' },
-  ]
-  @Emit('loginout') click() {};
+  ];
+  @Emit('loginout') public click() {}
 
 
 }

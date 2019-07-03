@@ -87,29 +87,29 @@ const { Item } = Form;
         'a-icon': Icon,
         'a-checkbox': Checkbox,
         'a-button': Button,
-    }
+    },
 })
 export default class Login extends Vue {
+
+    public form: any;
     constructor() {
         super();
     }
 
-    form: any;
-
-    beforeCreate () {
+    public beforeCreate() {
         this.form = this.$form.createForm(this);
     }
 
-    async login(param: any) {
+    public async login(param: any) {
         const res = await request({
             api: '/api/user/sigin',
             method: 'POST',
-            body: param
+            body: param,
         });
         console.log(res);
     }
 
-    handleSubmit(e:any): void {
+    public handleSubmit(e: any): void {
         e.preventDefault();
         this.form.validateFields((err: any, values: any) => {
             if (!err) {

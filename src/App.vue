@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class App extends Vue {
@@ -15,7 +15,7 @@ export default class App extends Vue {
     super();
   }
 
-  beforeRouteUpdate (to:any, from:any, next:any) {
+  public beforeRouteUpdate(to: any, from: any, next: any) {
 
     next();
   }

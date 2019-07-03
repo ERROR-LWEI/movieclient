@@ -1,39 +1,39 @@
 <template>
-  <Layout id="components-layout-demo-fixed">
-    <Header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
+  <a-layout id="components-layout-demo-fixed">
+    <a-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
       <div class="logo">
           Lemon
       </div>
-      <Menu
+      <a-menu
         theme="dark"
         mode="horizontal"
         :defaultSelectedKeys="['1']"
         :style="{ lineHeight: '64px' }"
       >
-        <MenuItem key="1">
+        <a-menuitem key="1">
           <router-link to="/home">Home</router-link>
-        </MenuItem>
-        <MenuItem key="2">
+        </a-menuitem>
+        <a-menuitem key="2">
           <router-link to="/about">About</router-link>
-        </MenuItem>
-        <MenuItem key="3">nav 3</MenuItem>
+        </a-menuitem>
+        <a-menuitem key="3">nav 3</a-menuitem>
               <a-admin @loginout="loginout"/>
-      </Menu>
-    </Header>
-    <Content :style="{ padding: '0 50px', marginTop: '64px' }">
-      <Breadcrumb :style="{ margin: '16px 0' }">
-        <Item>Home</Item>
-        <Item>List</Item>
-        <Item>App</Item>
-      </Breadcrumb>
+      </a-menu>
+    </a-header>
+    <a-content :style="{ padding: '0 50px', marginTop: '64px' }">
+      <a-breadcrumb :style="{ margin: '16px 0' }">
+        <a-item>Home</a-item>
+        <a-item>List</a-item>
+        <a-item>App</a-item>
+      </a-breadcrumb>
       <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
           <router-view/>
       </div>
-    </Content>
-    <Footer :style="{ textAlign: 'center' }">
+    </a-content>
+    <a-footer :style="{ textAlign: 'center' }">
       Ant Design ©2018 Created by Ant UED
-    </Footer>
-  </Layout>
+    </a-footer>
+  </a-layout>
 </template>
 
 <script lang="ts">
@@ -46,23 +46,23 @@ const { Header, Content, Footer } = Layout;
 const { Item } = Breadcrumb;
 const MenuItem = Menu.Item;
 @Component({
-  components: { 
-    Layout, 
-    Header, 
-    Content, 
-    Footer, 
-    Menu, 
-    Breadcrumb, 
-    Item,
-    MenuItem,
-    'a-admin': Admin
-  }
+  components: {
+    'a-layout': Layout,
+    'a-header':Header,
+    'a-content': Content,
+    'a-footer': Footer,
+    'a-menu': Menu,
+    'a-breadcrumb': Breadcrumb,
+    'a-item': Item,
+    'a-menuitem':MenuItem,
+    'a-admin': Admin,
+  },
 })
 export default class BasicLayout extends Vue {
-  @Provide() isAuth = false;
-  @Provide() meunKey: any = 0;
+  @Provide() public isAuth = false;
+  @Provide() public meunKey: any = 0;
 
-  async beforeRouteEnter(to:any, from:any, next:any) {
+  public async beforeRouteEnter(to: any, from: any, next: any) {
     const toPath = to.path,
           fromPath = from.path;
     if (toPath.indexOf('/user') < 0) {
@@ -78,7 +78,7 @@ export default class BasicLayout extends Vue {
     });
   }
 
-  beforeRouteUpdate (to:any, from:any, next:any) {
+  public beforeRouteUpdate(to: any, from: any, next: any) {
     const { isAuth } = this;
     if (!isAuth) {
       next('/user/login');
@@ -87,7 +87,7 @@ export default class BasicLayout extends Vue {
   }
 
   @Emit('loginout')
-  async loginout() {
+  public async loginout() {
     const res = await request({
         api: '/api/user/loginout',
         method: 'POST',
@@ -102,9 +102,9 @@ export default class BasicLayout extends Vue {
    * 路由变化监听，根据路由变化做相应操作
    */
   @Watch('$route')
-  watchRoute(val: any, old: any) {
+  public watchRoute(val: any, old: any) {
     console.log(val);
-    console.log('')
+    console.log('');
     console.log(old);
   }
 }

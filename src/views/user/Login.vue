@@ -79,65 +79,62 @@ const { Item } = Form;
         'a-icon': Icon,
         'a-checkbox': Checkbox,
         'a-button': Button,
-    }
+    },
 })
 export default class Login extends Vue {
-    @Provide() form: any;
-    @Provide() isEye: Boolean = false;
-    @Provide() type: string = 'eye-invisible';
-    @Provide() inputType: string = 'password';
-    @Provide() isLoading: Boolean = false;
+    @Provide() public form: any;
+    @Provide() public isEye: Boolean = false;
+    @Provide() public type: string = 'eye-invisible';
+    @Provide() public inputType: string = 'password';
+    @Provide() public isLoading: Boolean = false;
 
-    beforeCreate () {
+    public beforeCreate() {
         this.form = this.$form.createForm(this);
     }
 
-    beforeRouteEnter(to: Route, from: Route, next: any) {
+    public beforeRouteEnter(to: Route, from: Route, next: any) {
         const { query: { code } } = to;
-        console.log('to', to);
-        console.log('');
-        console.log('from', from);
         next((vm: any) => {
             if (code) {
-                vm.login({ type: 'weibo', code: code, url: 'www.lemonpai.cn' })
+                vm.login({ type: 'weibo', code, url: 'www.lemonpai.cn' });
             }
         });
     }
 
     @Emit('click')
-    click() {
+    public click() {
         this.isEye = !this.isEye;
     }
 
     @Watch('isEye')
-    watchEye(val: Boolean, old: Boolean) {
+    public watchEye(val: Boolean, old: Boolean) {
         this.type = (!this.isEye ? 'eye' : 'eye-invisible');
-        this.inputType = (!this.isEye ? 'text': 'password');
+        this.inputType = (!this.isEye ? 'text' : 'password');
     }
 
     @Watch('$route')
-    watchRoute(val: any, old: any) {
+    public watchRoute(val: any, old: any) {
         console.log('val', val);
         console.log('');
         console.log('old', val);
     }
 
-    weibologin() {
-        window.location.href = 'https://api.weibo.com/oauth2/authorize?client_id=524879129&redirect_uri=http://www.lemonpai.cn/user/login&code=CODE'
+    public weibologin() {
+        window.location.href = 'https://api.weibo.com/oauth2/authorize?client_id=524879129&redirect_uri=http://www.lemonpai.cn/user/login&code=CODE';
     }
 
-    async login(param: any) {
+    public async login(param: any) {
         const res = await request({
             api: '/api/user/login',
             method: 'POST',
-            body: param
+            body: param,
         });
         if (res.code === 1) {
             this.$router.push('/home');
         }
     }
 
-    handleSubmit(e:any): void {
+    public handleSubmit(e: any): void {
         e.preventDefault();
         this.form.validateFields(async (err: any, values: any) => {
             if (!err) {

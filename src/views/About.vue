@@ -11,11 +11,11 @@ import { Route } from 'vue-router';
 @Component({})
 export default class About extends Vue {
     constructor() { super(); }
-    beforeRouteLeave (to: Route, from: Route , next: () => void): void {
-        next()
+    public beforeRouteLeave(to: Route, from: Route , next: () => void): void {
+        next();
     }
 
-    beforeRouteEnter (to: Route, from: Route, next: () => void): void {
+    public beforeRouteEnter(to: Route, from: Route, next: () => void): void {
         next();
     }
 }

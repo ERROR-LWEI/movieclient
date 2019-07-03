@@ -24,12 +24,12 @@ export default new Router({
           path: 'about',
           name: 'about',
           component: () => import('./views/About.vue'),
-        },{
+        }, {
           path: 'usermessage',
           name: 'usermessage',
-          component: () => import('./views/user/user.vue')
-        }
-      ]
+          component: () => import('./views/user/user.vue'),
+        },
+      ],
     },
     {
       path: '/user',
@@ -39,12 +39,12 @@ export default new Router({
         {
           path: 'login',
           name: 'login',
-          component: ()=> import('./views/user/Login.vue'),
-        },{
+          component: () => import('./views/user/Login.vue'),
+        }, {
           path: 'sigin',
           name: 'sigin',
           component: () => import('./views/user/Sigin.vue'),
-        }
+        },
       ],
     },
   ],

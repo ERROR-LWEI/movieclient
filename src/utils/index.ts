@@ -2,10 +2,10 @@ export function paramsToApi(params: any) {
   const { api = '', query = {} } = params;
   let queryUrl: any = [];
   if (query && typeof query === 'object' && !Array.isArray(query)) {
-    for (let key in query) {
+    for (const key in query) {
       queryUrl.push(`${key}=${query[key]}`);
     }
-    if (queryUrl.length === 0) return api;
+    if (queryUrl.length === 0) { return api; }
     queryUrl = queryUrl.join('&&');
     return `${api}?${queryUrl}`;
   }
@@ -29,6 +29,6 @@ export function errorCompatibleWith(error: any) {
   }
   return {
     code,
-    message
-  }
+    message,
+  };
 }

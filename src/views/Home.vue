@@ -17,11 +17,11 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 })
 export default class Home extends Vue {
         constructor() { super(); }
-    beforeRouteLeave (to: Route, from: Route , next: () => void): void {
-        next()
+    public beforeRouteLeave(to: Route, from: Route , next: () => void): void {
+        next();
     }
 
-    beforeRouteEnter (to: Route, from: Route, next: () => void): void {
+    public beforeRouteEnter(to: Route, from: Route, next: () => void): void {
         next();
     }
 }
