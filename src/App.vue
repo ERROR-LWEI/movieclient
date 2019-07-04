@@ -16,7 +16,6 @@ export default class App extends Vue {
   }
 
   public beforeRouteUpdate(to: any, from: any, next: any) {
-
     next();
   }
 }
@@ -27,6 +26,23 @@ export default class App extends Vue {
 :global {
   body .ant-layout {
     min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 1px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #535353;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    background: #EDEDED;
   }
 }
 

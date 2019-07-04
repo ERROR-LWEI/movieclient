@@ -26,7 +26,7 @@
         <a-item>List</a-item>
         <a-item>App</a-item>
       </a-breadcrumb>
-      <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
+      <div :style="{ padding: '24px', maxHeight: '100vh' }">
           <router-view/>
       </div>
     </a-content>

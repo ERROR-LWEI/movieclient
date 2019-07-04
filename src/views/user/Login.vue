@@ -1,7 +1,7 @@
 <template>
-    <div class="Login">
-        <div class="logo"></div>
-        <div class="form">
+    <div :class="$style.Login">
+        <div :class="$style.logo"></div>
+        <div :class="$style.form">
             <a-form :form="form" @submit="handleSubmit">
                 <a-form-item>
                     <a-input
@@ -14,7 +14,7 @@
                             }
                         ]"
                         type="text"
-                        class="formInput"
+                        :class="$style.formInput"
                         placeholder="Email"
                     >
                         <a-icon
@@ -35,7 +35,7 @@
                             }
                         ]"
                         :type="inputType"
-                        class="formInput"
+                        :class="$style.formInput"
                         placeholder="Password"
                     >
                         <a-icon
@@ -50,14 +50,14 @@
                     <a-button
                         type="primary"
                         html-type="submit"
-                        class="login-form-button"
+                        :class="$style.loginformbutton"
                         :loading="isLoading"
                     >
                         LOGIN
                     </a-button>
                 </a-form-item>
             </a-form>
-            <div class="thirdparty">
+            <div :class="$style.thirdparty">
                 <a-icon type="weibo" @click="weibologin" />
                 <a-icon type="qq" />
                 <a-icon type="wechat" />
@@ -146,17 +146,19 @@ export default class Login extends Vue {
     }
 }
 </script>
-<style lang="less">
+<style module lang="less">
 @import '../../assets/design/index.less';
-body .form {
-    .ant-input {
-         font-family: "ITCAvantGardeProReg";
-         font-weight: 900;
-         font-size: 20px;
-         height: 45px;
-         border-radius: 20px;
+
+:global {
+    body .ant-input {
+        font-family: "ITCAvantGardeProReg";
+        font-weight: 900;
+        font-size: 20px;
+        height: 45px;
+        border-radius: 20px;
     }
 }
+
 .Login {
     width: 100%;
     height: 100%;
@@ -216,7 +218,7 @@ body .form {
             float: right;
         }
 
-        .login-form-button {
+        .loginformbutton {
             font-family: "ITCAvantGardeProReg";
             font-weight: 900;
             letter-spacing: 4px;
