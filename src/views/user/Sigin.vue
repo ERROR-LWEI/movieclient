@@ -65,6 +65,7 @@
 import { Component, Vue, Emit, Model, Watch, Provide } from 'vue-property-decorator';
 import { Form, Input, Icon, Checkbox, Button } from 'ant-design-vue';
 import request from '@/middleware/request';
+import { encode } from '@/middleware/cryptograph';
 import { Route } from 'vue-router';
 const { Item } = Form;
 @Component({
@@ -127,6 +128,7 @@ export default class Sigin extends Vue {
         this.form.validateFields(async (err: any, values: any) => {
             if (!err) {
                 this.isLoading = true;
+                values.password = encode(values.password);
                 await this.sigin(values);
                 this.isLoading = false;
             }

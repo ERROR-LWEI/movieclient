@@ -70,6 +70,7 @@
 import { Component, Vue, Emit, Model, Watch, Provide } from 'vue-property-decorator';
 import { Form, Input, Icon, Checkbox, Button } from 'ant-design-vue';
 import request from '@/middleware/request';
+import { encode } from '@/middleware/cryptograph';
 import { Route } from 'vue-router';
 const { Item } = Form;
 @Component({
@@ -146,6 +147,7 @@ export default class Login extends Vue {
             if (!err) {
                 this.isLoading = true;
                 values.type = 'user';
+                values.password = encode(values.password);
                 await this.login(values);
                 this.isLoading = false;
             }
