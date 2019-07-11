@@ -126,7 +126,8 @@ export default class Login extends Vue {
     }
 
     public weibologin() {
-        window.location.href = 'https://api.weibo.com/oauth2/authorize?client_id=524879129&redirect_uri=http://www.lemonpai.cn/user/login&code=CODE';
+        let protocol = window.location.protocol;
+        window.location.href = `https://api.weibo.com/oauth2/authorize?client_id=524879129&redirect_uri=${protocol}//www.lemonpai.cn/user/login&code=CODE`;
     }
 
     public async login(param: any) {
