@@ -121,7 +121,6 @@ export default class Login extends Vue {
     }
 
     public loginPage() {
-        console.log(this.$router)
         this.$router.push('/user/sigin');
     }
 
@@ -131,7 +130,6 @@ export default class Login extends Vue {
     }
 
     public async login(param: any) {
-        param.type = 'user';
         const res = await request({
             api: '/api/user/login',
             method: 'POST',
@@ -147,6 +145,7 @@ export default class Login extends Vue {
         this.form.validateFields(async (err: any, values: any) => {
             if (!err) {
                 this.isLoading = true;
+                values.type = 'user';
                 await this.login(values);
                 this.isLoading = false;
             }
