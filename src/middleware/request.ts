@@ -13,7 +13,6 @@ export interface RequestParam {
 export default function request(params: RequestParam) {
   const { body = {} , method = 'GET', query, ...config} =  params;
   const url = paramsToApi(params);
-
   const request: AxiosRequestConfig = {
     url,
     method,

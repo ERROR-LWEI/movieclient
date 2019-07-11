@@ -67,7 +67,7 @@ export default class BasicLayout extends Vue {
           fromPath = from.path;
     if (toPath.indexOf('/user') < 0) {
       const { code } = await request({
-        api: '/api/user/getUser',
+        api: 'http://localhost:8080/api/user/getUser',
       });
       if (code === 401) {
         next('/user/login');

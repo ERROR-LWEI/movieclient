@@ -62,6 +62,7 @@
                 <a-icon type="qq" />
                 <a-icon type="wechat" />
             </div>
+            <div :class="$style.sigin"><span @click="loginPage">注册</span></div>
         </div>
     </div>
 </template>
@@ -119,11 +120,17 @@ export default class Login extends Vue {
         console.log('old', val);
     }
 
+    public loginPage() {
+        console.log(this.$router)
+        this.$router.push('/user/sigin');
+    }
+
     public weibologin() {
         window.location.href = 'https://api.weibo.com/oauth2/authorize?client_id=524879129&redirect_uri=http://www.lemonpai.cn/user/login&code=CODE';
     }
 
     public async login(param: any) {
+        param.type = 'user';
         const res = await request({
             api: '/api/user/login',
             method: 'POST',
@@ -156,6 +163,25 @@ export default class Login extends Vue {
         font-size: 20px;
         height: 45px;
         border-radius: 20px;
+    }
+}
+
+.sigin {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #cacacad4;
+    position: relative;
+
+    & span {
+        display: inline-block;
+        padding: 10px;
+        background: @colorOne;
+        position: absolute;
+        top: -20px;
+        cursor: pointer;
     }
 }
 
