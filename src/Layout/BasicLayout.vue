@@ -16,7 +16,10 @@
         <a-menuitem key="2">
           <router-link to="/about">About</router-link>
         </a-menuitem>
-        <a-menuitem key="3">nav 3</a-menuitem>
+        <a-menuitem key="3">
+          <router-link to="/movie/add">添加电影</router-link>
+        </a-menuitem>
+        <a-menuitem key="4">nav 3</a-menuitem>
               <a-admin @loginout="loginout"/>
       </a-menu>
     </a-header>

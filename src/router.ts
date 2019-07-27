@@ -24,11 +24,17 @@ export default new Router({
           path: 'about',
           name: 'about',
           component: () => import('./views/About.vue'),
-        }, {
+        }, 
+        {
           path: 'usermessage',
           name: 'usermessage',
           component: () => import('./views/user/user.vue'),
         },
+        {
+          path: 'movie/add',
+          name: 'add',
+          component: () => import('./views/movie/editandadd/movieform.vue')
+        }
       ],
     },
     {
