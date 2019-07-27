@@ -158,14 +158,16 @@ export default class Login extends Vue {
 <style module lang="less">
 @import '../../assets/design/index.less';
 
-:global {
-    body .ant-input {
+.Login {
+    :global {
+    .ant-input {
         font-family: "ITCAvantGardeProReg";
         font-weight: 900;
         font-size: 20px;
         height: 45px;
         border-radius: 20px;
     }
+}
 }
 
 .sigin {

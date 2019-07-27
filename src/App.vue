@@ -1,19 +1,31 @@
 <template>
-  <div id="app">
-    <transition name="fade">
-            <router-view/>
-    </transition>
-  </div>
+  <a-locale-provider :locale="zh_CN">
+      <div id="app">
+        <transition name="fade">
+                <router-view/>
+        </transition>
+      </div>
+  </a-locale-provider>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
-@Component({})
+import { LocaleProvider } from 'ant-design-vue';
+import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
+@Component({
+  components: {
+    'a-locale-provider': LocaleProvider
+  }
+})
 export default class App extends Vue {
   constructor() {
     super();
   }
+
+  zh_CN = zh_CN;
 
   public beforeRouteUpdate(to: any, from: any, next: any) {
     next();
