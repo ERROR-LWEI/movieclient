@@ -3,7 +3,7 @@ module.exports = {
     loaderOptions: {
       less: {
         modifyVars: {
-          'primary-color': '#052763',
+          'primary-color': '#1b1b1b',
           'item-hover-bg': '#ddd',
           'border-radius-base': '2px',
           'input-hover-border-color': '#0d499e'

@@ -29,7 +29,7 @@
         <a-item>List</a-item>
         <a-item>App</a-item>
       </a-breadcrumb>
-      <div :style="{ padding: '24px', maxHeight: '100vh' }">
+      <div :style="{ padding: '24px' }">
           <router-view/>
       </div>
     </a-content>

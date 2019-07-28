@@ -1,31 +1,36 @@
 <template>
     <div :class="$style.editmovie">
-        <div :class="$style.movieimages"></div>
+        <div :class="$style.movieimages">
+            <movieposter :updatedata="updateMovieimage" />
+        </div>
         <div :class="$style.movieform">
             <a-form :form="form" @submit="formSubmit">
                 <a-form-item>
                     <a-input
-                        :decorator="['name', { initialValue: '' }]"
+                        v-decorator="['name']"
                         placeholder="电影名"
                     />
                 </a-form-item>
                 <a-form-item>
                     <a-input 
-                        :decorator="['en_name', { initialValue: '' }]"
+                        v-decorator="['name_en']"
                         placeholder="英文名"
                     />
                 </a-form-item>
                 <a-form-item>
                     <a-input
-                        :decorator="['site', { initialValue: '' }]"
+                        v-decorator="['site', { initialValue: '' }]"
                         placeholder="国家"
                     />
                 </a-form-item>
                 <a-form-item>
-                    <a-input
-                        :decorator="['language', { initialValue: '' }]"
+                    <a-select
+                        v-decorator="['language']"
                         placeholder="语言"
-                    />
+                        mode="multiple"
+                    >
+                        <a-select-option v-for="item in metadata.language.data" :key="item.id">{{ item.name }}</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item>
                     <a-month-picker
@@ -34,7 +39,16 @@
                     />
                 </a-form-item>
                 <a-form-item>
-                    <movie-type placeholder="类型" />
+                    <a-select
+                        v-decorator="['type']"
+                        placeholder="类型"
+                        mode="multiple"
+                    >
+                        <a-select-option v-for="item in metadata.movietype.data" :key="item.id">{{ item.name }}</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item :class="$style.colsubmit">
+                    <a-button :class="$style.submitbtn" html-type="submit" type="primary" :loading="!isSubmit">提交</a-button>
                 </a-form-item>
             </a-form>
         </div>
@@ -43,8 +57,11 @@
 
 <script lang="ts">
 import { Vue, Component, Emit, Provide } from 'vue-property-decorator';
-import { Form, Input, DatePicker, Upload } from 'ant-design-vue';
-import MovieType from '@/components/enumerate/movietype.vue';
+import { Form, Input, DatePicker, Upload, Button, Select } from 'ant-design-vue';
+import Movieposter from '@/views/movie/editandadd/movieposter.vue';
+import { namespace } from 'vuex-class';
+import request from '@/middleware/request';
+const someModule = namespace('metadata');
 
 
 @Component({
@@ -53,34 +70,66 @@ import MovieType from '@/components/enumerate/movietype.vue';
         'a-form-item': Form.Item,
         'a-input': Input,
         'a-month-picker': DatePicker.MonthPicker,
-        'movie-type': MovieType,
-        'a-upload': Upload
+        'a-upload': Upload,
+        'a-button': Button,
+        'a-select': Select,
+        'a-select-option': Select.Option,
+        'movieposter': Movieposter
     }
 })
 export default class Movieform extends Vue {
     @Provide() public form: any;
-    @Provide() public isLoading: Boolean = false;
     @Provide() public formItemLayout: any = {
         labelCol: { span: 6 },
         wrapperCol: { span: 14 },
     }
-    isUpload: Boolean = true;
+    @someModule.State(state => state) metadata: any;
+    @someModule.Action('getLanguage') getLanguage: any;
+    @someModule.Action('getMovietype') getMovietype: any;
+    isSubmit: Boolean = true;
+    movieimg: String = '';
+
+    public created() {
+        const { movietype, language } = this.metadata;
+        if (movietype.data.length == 0) {
+            this.getMovietype({
+                url: '/api/meta/getMovietype'
+            })
+        }
+        if (language.data.length == 0) {
+            this.getLanguage({
+                url: '/api/meta/getLanguage'
+            })
+        }
+    }
 
     public beforeCreate() {
         this.form = this.$form.createForm(this);
     }
 
     @Emit('updateUploadStatus')
-    updateUploadStatus() {
-        this.isLoading=!this.isLoading;
+    public updateUploadStatus() {
+        //this.isLoading=!this.isLoading;
+    }
+
+    @Emit('updateMovieimage')
+    public updateMovieimage(params: any){
+        console.log(params)
+        this.movieimg = params;
     }
 
     formSubmit(e: any): void {
         e.preventDefault();
         this.form.validateFields(async (err: any, values: any) => {
             if (!err) {
-                this.isLoading = true;
-
+                this.isSubmit = false;
+                values['img'] = this.movieimg;
+                const res = await request({
+                    api: '/api/movie/addMovie',
+                    method: 'POST',
+                    body: values
+                });
+                this.isSubmit = true;
             }
         });
     }
@@ -91,9 +140,13 @@ export default class Movieform extends Vue {
     @import "../../../assets/design/index.less";
     .editmovie {
         width: 700px;
+        max-height: 600px;
         margin:  0 auto;
+        border-radius: @BorderRadius;
         display: flex;
         flex-direction: row;
+        overflow: hidden;
+        box-shadow: 0 0 10px 1px #ececec;
     }
 
     .movieimages {
@@ -103,8 +156,21 @@ export default class Movieform extends Vue {
     .movieform {
         width: 300px;
         padding: 40px 20px;
-        border-radius: @BorderRadius;
         background-color: #ffffff;
+    }
+
+    .colsubmit {
+        :global {
+            .ant-form-item-children {
+                display: inherit;
+                text-align: center;
+            }
+        }
+    }
+
+    .submitbtn {
+        margin: 0 auto;
+        border-radius: @BorderRadius;
     }
 </style>
 
