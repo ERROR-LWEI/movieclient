@@ -12,6 +12,7 @@ interface Metadata {
 interface Res {
     movietype: Metadata
     language: Metadata
+    nation: Metadata
 }
 
 const state: Res = {
@@ -19,6 +20,9 @@ const state: Res = {
         data: []
     },
     language: {
+        data: []
+    },
+    nation: {
         data: []
     }
 }
@@ -35,6 +39,11 @@ const actions: any = {
         request(params).then(res => {
             context.commit('GetLanguage', res);
         }).catch((e) => null);
+    },
+    getNation(context: { commit: Commit }, params: RequestParam) {
+        request(params).then(res => {
+            context.commit('GetNation', res);
+        }).catch((e) => null);
     }
 }
 
@@ -44,6 +53,9 @@ const mutations: any = {
     },
     GetLanguage(states: any, params: object) {
         state.language = params;
+    },
+    GetNation(states: any, params: object) {
+        state.nation = params;
     }
 }
 

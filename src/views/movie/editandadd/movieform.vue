@@ -18,10 +18,29 @@
                     />
                 </a-form-item>
                 <a-form-item>
-                    <a-input
-                        v-decorator="['site', { initialValue: '' }]"
-                        placeholder="国家"
+                    <a-select
+                        v-decorator="['type']"
+                        placeholder="类型"
+                        mode="multiple"
+                    >
+                        <a-select-option v-for="item in metadata.movietype.data" :key="item.id">{{ item.name }}</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item>
+                    <a-month-picker
+                        v-decorator="['year']"
+                        :style="{ width: '100%' }"
+                        placeholder="拍摄时间"
                     />
+                </a-form-item>
+                <a-form-item>
+                    <a-select
+                        v-decorator="['site']"
+                        placeholder="国家"
+                        mode="multiple"
+                    >
+                        <a-select-option v-for="item in metadata.nation.data" :key="item.id">{{ item.name }}</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item>
                     <a-select
@@ -33,19 +52,10 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item>
-                    <a-month-picker
-                        :style="{ width: '100%' }"
-                        placeholder="上映时间"
+                    <a-text
+                        v-decorator="['info']"
+                        placeholder="描述"
                     />
-                </a-form-item>
-                <a-form-item>
-                    <a-select
-                        v-decorator="['type']"
-                        placeholder="类型"
-                        mode="multiple"
-                    >
-                        <a-select-option v-for="item in metadata.movietype.data" :key="item.id">{{ item.name }}</a-select-option>
-                    </a-select>
                 </a-form-item>
                 <a-form-item :class="$style.colsubmit">
                     <a-button :class="$style.submitbtn" html-type="submit" type="primary" :loading="!isSubmit">提交</a-button>
@@ -74,6 +84,7 @@ const someModule = namespace('metadata');
         'a-button': Button,
         'a-select': Select,
         'a-select-option': Select.Option,
+        'a-text': Input.TextArea,
         'movieposter': Movieposter
     }
 })
@@ -86,11 +97,12 @@ export default class Movieform extends Vue {
     @someModule.State(state => state) metadata: any;
     @someModule.Action('getLanguage') getLanguage: any;
     @someModule.Action('getMovietype') getMovietype: any;
+    @someModule.Action('getNation') getNation: any;
     isSubmit: Boolean = true;
     movieimg: String = '';
 
     public created() {
-        const { movietype, language } = this.metadata;
+        const { movietype, language, nation } = this.metadata;
         if (movietype.data.length == 0) {
             this.getMovietype({
                 url: '/api/meta/getMovietype'
@@ -99,6 +111,11 @@ export default class Movieform extends Vue {
         if (language.data.length == 0) {
             this.getLanguage({
                 url: '/api/meta/getLanguage'
+            })
+        }
+        if (nation.data.length == 0) {
+            this.getNation({
+                url: '/api/meta/getNation'
             })
         }
     }
