@@ -1,0 +1,64 @@
+<template>
+    <div :class="$style.AdminLayout">
+        <a-layout style="background: #fff">
+            <a-layout-sider width="200" style="background: #fff">
+                <a-menu
+                    mode="inline"
+                    style="height: 100%"
+                >
+                    <a-sub-menu :key="item.key" v-for="item in module">
+                        <span slot="title"><a-icon v-if="item.icon" :type="item.icon" />{{ item.name }}</span>
+                        <a-menu-item :key="child.key" v-for="child in item.children">{{ child.name }}</a-menu-item>
+                    </a-sub-menu>
+                </a-menu>
+            </a-layout-sider>
+            <a-layout-content>
+                <div>
+                    <router-view/>
+                </div>
+            </a-layout-content>
+        </a-layout>
+    </div>
+</template>
+<script lang="ts">
+import { Vue, Component, Provide } from 'vue-property-decorator';
+import { Layout, Menu, Icon } from 'ant-design-vue';
+
+const adminModule = [
+    {
+        name: '参与项目',
+        key: 'project',
+        icon: null,
+        children: [
+            {
+                name: '电影',
+                key: 'movie',
+            }
+        ]
+    }
+]
+
+
+@Component({
+    components: {
+        'a-layout': Layout,
+        'a-layout-sider': Layout.Sider,
+        'a-menu': Menu,
+        'a-icon': Icon,
+        'a-sub-menu': Menu.SubMenu,
+        'a-menu-item': Menu.Item,
+        'a-layout-content': Layout.Content
+    }
+})
+export default class AdminLayout extends Vue {
+    @Provide() private module = adminModule;
+}
+</script>
+<style module lang="less">
+    .AdminLayout {
+        padding: 20px 0;
+        background-color: #fff;
+    }
+</style>
+
+

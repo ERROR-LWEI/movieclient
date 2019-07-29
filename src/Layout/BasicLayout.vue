@@ -24,11 +24,11 @@
       </a-menu>
     </a-header>
     <a-content :style="{ padding: '0 50px', marginTop: '64px' }">
-      <a-breadcrumb :style="{ margin: '16px 0' }">
+      <!-- <a-breadcrumb :style="{ margin: '16px 0' }">
         <a-item>Home</a-item>
         <a-item>List</a-item>
         <a-item>App</a-item>
-      </a-breadcrumb>
+      </a-breadcrumb> -->
       <div :style="{ padding: '24px' }">
           <router-view/>
       </div>

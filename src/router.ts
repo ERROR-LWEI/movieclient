@@ -28,7 +28,7 @@ export default new Router({
         {
           path: 'usermessage',
           name: 'usermessage',
-          component: () => import('./views/user/user.vue'),
+          component: () => import('@/Layout/AdminLayout.vue'),
         },
         {
           path: 'movie/add',
