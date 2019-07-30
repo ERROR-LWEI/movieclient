@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import { RootState } from '@/modules/RootState';
 import { metadata } from '@/modules/metadata';
+import { movie } from '@/modules/movie';
+import { user } from '@/modules/user';
 
 Vue.use(Vuex);
 
@@ -11,6 +13,8 @@ const store: StoreOptions<RootState> = {
   },
   modules: {
     metadata,
+    movie,
+    user
   }
 }
 

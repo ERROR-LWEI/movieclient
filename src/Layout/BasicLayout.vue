@@ -16,10 +16,7 @@
         <a-menuitem key="2">
           <router-link to="/about">About</router-link>
         </a-menuitem>
-        <a-menuitem key="3">
-          <router-link to="/movie/add">添加电影</router-link>
-        </a-menuitem>
-        <a-menuitem key="4">nav 3</a-menuitem>
+        <a-menuitem key="3">nav 3</a-menuitem>
               <a-admin @loginout="loginout"/>
       </a-menu>
     </a-header>
@@ -43,11 +40,15 @@
 import { Component, Vue, Provide, Emit, Watch } from 'vue-property-decorator';
 import { Layout, Menu, Breadcrumb } from 'ant-design-vue';
 import { Route } from 'vue-router';
+import { namespace } from 'vuex-class';
 import request from '@/middleware/request';
 import Admin from '@/Layout/Admin.vue';
 const { Header, Content, Footer } = Layout;
 const { Item } = Breadcrumb;
 const MenuItem = Menu.Item;
+const someUser = namespace('user');
+
+
 @Component({
   components: {
     'a-layout': Layout,
@@ -62,28 +63,29 @@ const MenuItem = Menu.Item;
   },
 })
 export default class BasicLayout extends Vue {
-  @Provide() public isAuth = false;
   @Provide() public meunKey: any = 0;
+  @someUser.State((state) => state.usermsg) usermsg: any;
+  @someUser.Action('getUsermsg') getUsermsg: any;
+  @someUser.Action('loginOut') loginOut: any;
 
   public async beforeRouteEnter(to: any, from: any, next: any) {
-    const toPath = to.path,
-          fromPath = from.path;
-    if (toPath.indexOf('/user') < 0) {
-      const { code } = await request({
-        api: '/api/user/getUser',
-      });
-      if (code === 401) {
-        next('/user/login');
-      }
+    const { data } = await request({ api: '/api/user/getUser' });
+    if (!data) {
+      next('/user/login');
     }
-    next((vm: any) => {
-      vm.isAuth = true;
-    });
+    next((vm: any) =>{
+      const { usermsg: { data } } = vm;
+      if(!data) {
+        vm.getUsermsg({
+          api: '/api/user/getUser',
+        })
+      }
+    })
   }
 
   public beforeRouteUpdate(to: any, from: any, next: any) {
-    const { isAuth } = this;
-    if (!isAuth) {
+    const { data } = this.usermsg;
+    if(!data) {
       next('/user/login');
     }
     next();
@@ -91,14 +93,7 @@ export default class BasicLayout extends Vue {
 
   @Emit('loginout')
   public async loginout() {
-    const res = await request({
-        api: '/api/user/loginout',
-        method: 'POST',
-    });
-    if (res.code === 1) {
-      this.isAuth = false;
-      this.$router.push('/user/login');
-    }
+    this.loginOut({ api: '/api/user/loginout', method: 'POST' });
   }
 
   /**
@@ -109,6 +104,14 @@ export default class BasicLayout extends Vue {
     console.log(val);
     console.log('');
     console.log(old);
+  }
+
+  @Watch('usermsg')
+  public watchUsermsg(val: any, old: any) {
+    const { data } = val;
+    if (!data) {
+      this.$router.replace('/user/login');
+    } 
   }
 }
 </script>

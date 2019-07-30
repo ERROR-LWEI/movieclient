@@ -1,18 +1,11 @@
-import { Module, Action, Commit } from 'vuex';
-import { RootState } from '@/modules/RootState';
+import { Module, Commit } from 'vuex';
+import { RootState, Response } from '@/modules/RootState';
 import request, { RequestParam } from '@/middleware/request';
 
-interface Metadata {
-    code?: number,
-    message?: string,
-    type?: string,
-    data?: any
-}
-
 interface Res {
-    movietype: Metadata
-    language: Metadata
-    nation: Metadata
+    movietype: Response
+    language: Response
+    nation: Response
 }
 
 const state: Res = {

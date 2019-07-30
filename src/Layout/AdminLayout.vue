@@ -8,7 +8,7 @@
                 >
                     <a-sub-menu :key="item.key" v-for="item in module">
                         <span slot="title"><a-icon v-if="item.icon" :type="item.icon" />{{ item.name }}</span>
-                        <a-menu-item :key="child.key" v-for="child in item.children">{{ child.name }}</a-menu-item>
+                        <a-menu-item :key="child.key" v-for="child in item.children"><router-link :to="`/usermessage/${item.key}/${child.key}`">{{ child.name }}</router-link></a-menu-item>
                     </a-sub-menu>
                 </a-menu>
             </a-layout-sider>
