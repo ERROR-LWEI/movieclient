@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import BasicLayout from '@/Layout/BasicLayout.vue';
 import UserLayout from '@/Layout/UserLayout.vue';
+import MetaRouter from '@/views/meta/route';
 
 Vue.use(Router);
 
@@ -43,7 +44,13 @@ export default new Router({
           path: 'movie/add',
           name: 'add',
           component: () => import('./views/movie/editandadd/movieform.vue')
-        }
+        },
+        {
+          path: 'setting',
+          name: 'setting',
+          component:() => import('@/Layout/SettingLayout.vue')
+        },
+        MetaRouter
       ],
     },
     {

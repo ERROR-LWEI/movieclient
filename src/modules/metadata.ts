@@ -6,6 +6,7 @@ interface Res {
     movietype: Response
     language: Response
     nation: Response
+    addMetadata: Response
 }
 
 const state: Res = {
@@ -17,7 +18,8 @@ const state: Res = {
     },
     nation: {
         data: []
-    }
+    },
+    addMetadata: {}
 }
 
 const namespaced: boolean = true;
@@ -37,6 +39,11 @@ const actions: any = {
         request(params).then(res => {
             context.commit('GetNation', res);
         }).catch((e) => null);
+    },
+    addMetadata(context: { commit: Commit }, params: RequestParam) {
+        request(params).then(res => {
+            context.commit('AddMetadata', res);
+        }).catch(e => null);
     }
 }
 
@@ -49,6 +56,9 @@ const mutations: any = {
     },
     GetNation(states: any, params: object) {
         state.nation = params;
+    },
+    AddMetadata(states: any, params: object) {
+        state.addMetadata = params;
     }
 }
 

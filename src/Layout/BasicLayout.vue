@@ -11,13 +11,12 @@
         :style="{ lineHeight: '64px' }"
       >
         <a-menuitem key="1">
-          <router-link to="/home">Home</router-link>
+          <router-link to="/home">首页</router-link>
         </a-menuitem>
         <a-menuitem key="2">
-          <router-link to="/about">About</router-link>
+          <router-link to="/metadata">元数据维护</router-link>
         </a-menuitem>
-        <a-menuitem key="3">nav 3</a-menuitem>
-              <a-admin @loginout="loginout"/>
+        <a-admin @loginout="loginout"/>
       </a-menu>
     </a-header>
     <a-content :style="{ padding: '0 50px', marginTop: '64px' }">
@@ -117,6 +116,15 @@ export default class BasicLayout extends Vue {
 </script>
 
 <style lang="less">
+@import '../assets/design/index.less';
+:global {
+    #components-layout-demo-fixed .ant-layout-header {
+        background: @colorFour;
+    }
+    #components-layout-demo-fixed .ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+      background: @colorFour;
+    }
+}
 #components-layout-demo-fixed .logo {
   width: 120px;
   height: 31px;
