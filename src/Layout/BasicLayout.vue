@@ -16,7 +16,7 @@
         <a-menuitem key="2">
           <router-link to="/metadata">元数据维护</router-link>
         </a-menuitem>
-        <a-admin @loginout="loginout"/>
+        <a-admin @loginout="loginout" :isLogin="isLogin"/>
       </a-menu>
     </a-header>
     <a-content :style="{ padding: '0 50px', marginTop: '64px' }">
@@ -63,15 +63,12 @@ const someUser = namespace('user');
 })
 export default class BasicLayout extends Vue {
   @Provide() public meunKey: any = 0;
+  @Provide() private isLogin: boolean = false;
   @someUser.State((state) => state.usermsg) usermsg: any;
   @someUser.Action('getUsermsg') getUsermsg: any;
   @someUser.Action('loginOut') loginOut: any;
 
   public async beforeRouteEnter(to: any, from: any, next: any) {
-    const { data } = await request({ api: '/api/user/getUser' });
-    if (!data) {
-      next('/user/login');
-    }
     next((vm: any) =>{
       const { usermsg: { data } } = vm;
       if(!data) {
@@ -82,13 +79,10 @@ export default class BasicLayout extends Vue {
     })
   }
 
-  public beforeRouteUpdate(to: any, from: any, next: any) {
-    const { data } = this.usermsg;
-    if(!data) {
-      next('/user/login');
-    }
-    next();
-  }
+  // public beforeRouteUpdate(to: any, from: any, next: any) {
+  //   const { data } = this.usermsg;
+  //   next();
+  // }
 
   @Emit('loginout')
   public async loginout() {
@@ -100,17 +94,19 @@ export default class BasicLayout extends Vue {
    */
   @Watch('$route')
   public watchRoute(val: any, old: any) {
-    console.log(val);
-    console.log('');
-    console.log(old);
+    // console.log(val);
+    // console.log('');
+    // console.log(old);
   }
 
   @Watch('usermsg')
   public watchUsermsg(val: any, old: any) {
     const { data } = val;
-    if (!data) {
-      this.$router.replace('/user/login');
-    } 
+    if (data) {
+      this.isLogin = true;
+    } else {
+      this.isLogin = false;
+    }
   }
 }
 </script>

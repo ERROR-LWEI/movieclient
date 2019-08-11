@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import BasicLayout from '@/Layout/BasicLayout.vue';
 import UserLayout from '@/Layout/UserLayout.vue';
 import MetaRouter from '@/views/meta/route';
+import projectRouter from '@/views/user/project/router';
 
 Vue.use(Router);
 
@@ -30,15 +31,7 @@ export default new Router({
           path: 'usermessage',
           name: 'usermessage',
           component: () => import('@/Layout/AdminLayout.vue'),
-          children: [{
-            path: 'project/movie',
-            name: 'movie',
-            component: () => import('@/views/user/project/movie/movieProject.vue')
-          },{
-            path: 'project/movie/add',
-            name: 'addmovie',
-            component: () => import('@/views/component/EditAndAddMovie/movieform.vue')
-          }]
+          children: [projectRouter]
         },
         {
           path: 'movie/add',

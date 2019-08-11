@@ -1,66 +1,68 @@
 <template>
-    <div :class="$style.editmovie">
-        <div :class="$style.movieimages">
-            <movieposter :updatedata="updateMovieimage" />
-        </div>
-        <div :class="$style.movieform">
-            <a-form :form="form" @submit="formSubmit">
-                <a-form-item>
-                    <a-input
-                        v-decorator="['name']"
-                        placeholder="电影名"
-                    />
-                </a-form-item>
-                <a-form-item>
-                    <a-input 
-                        v-decorator="['nameEN']"
-                        placeholder="英文名"
-                    />
-                </a-form-item>
-                <a-form-item>
-                    <a-select
-                        v-decorator="['type']"
-                        placeholder="类型"
-                        mode="multiple"
-                    >
-                        <a-select-option v-for="item in metadata.movietype.data" :key="item.id">{{ item.name }}</a-select-option>
-                    </a-select>
-                </a-form-item>
-                <a-form-item>
-                    <a-month-picker
-                        v-decorator="['year']"
-                        :style="{ width: '100%' }"
-                        placeholder="拍摄时间"
-                    />
-                </a-form-item>
-                <a-form-item>
-                    <a-select
-                        v-decorator="['site']"
-                        placeholder="国家"
-                        mode="multiple"
-                    >
-                        <a-select-option v-for="item in metadata.nation.data" :key="item.id">{{ item.name }}</a-select-option>
-                    </a-select>
-                </a-form-item>
-                <a-form-item>
-                    <a-select
-                        v-decorator="['language']"
-                        placeholder="语言"
-                        mode="multiple"
-                    >
-                        <a-select-option v-for="item in metadata.language.data" :key="item.id">{{ item.name }}</a-select-option>
-                    </a-select>
-                </a-form-item>
-                <a-form-item>
-                    <a-text
-                        v-decorator="['info']"
-                        placeholder="描述"
-                    />
-                </a-form-item>
-                <a-form-item :class="$style.colsubmit">
-                    <a-button :class="$style.submitbtn" html-type="submit" type="primary" :loading="!isSubmit">提交</a-button>
-                </a-form-item>
-            </a-form>
+    <div :class="$style.editmoviebox">
+        <div :class="$style.editmovie">
+            <div :class="$style.movieimages">
+                <movieposter :updatedata="updateMovieimage" />
+            </div>
+            <div :class="$style.movieform">
+                <a-form :form="form" @submit="formSubmit">
+                    <a-form-item>
+                        <a-input
+                            v-decorator="['name']"
+                            placeholder="电影名"
+                        />
+                    </a-form-item>
+                    <a-form-item>
+                        <a-input 
+                            v-decorator="['nameEN']"
+                            placeholder="英文名"
+                        />
+                    </a-form-item>
+                    <a-form-item>
+                        <a-select
+                            v-decorator="['type']"
+                            placeholder="类型"
+                            mode="multiple"
+                        >
+                            <a-select-option v-for="item in metadata.movietype.data" :key="item.id">{{ item.name }}</a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <a-form-item>
+                        <a-month-picker
+                            v-decorator="['year']"
+                            :style="{ width: '100%' }"
+                            placeholder="拍摄时间"
+                        />
+                    </a-form-item>
+                    <a-form-item>
+                        <a-select
+                            v-decorator="['site']"
+                            placeholder="国家"
+                            mode="multiple"
+                        >
+                            <a-select-option v-for="item in metadata.nation.data" :key="item.id">{{ item.name }}</a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <a-form-item>
+                        <a-select
+                            v-decorator="['language']"
+                            placeholder="语言"
+                            mode="multiple"
+                        >
+                            <a-select-option v-for="item in metadata.language.data" :key="item.id">{{ item.name }}</a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <a-form-item>
+                        <a-text
+                            v-decorator="['info']"
+                            placeholder="描述"
+                        />
+                    </a-form-item>
+                    <a-form-item :class="$style.colsubmit">
+                        <a-button :class="$style.submitbtn" html-type="submit" type="primary" :loading="!isSubmit">提交</a-button>
+                    </a-form-item>
+                </a-form>
+            </div>
         </div>
     </div>
 </template>
@@ -158,6 +160,14 @@ export default class Movieform extends Vue {
 
 <style module lang="less">
     @import "../../../assets/design/index.less";
+
+    .editmoviebox {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+    }
+
     .editmovie {
         width: 700px;
         max-height: 600px;

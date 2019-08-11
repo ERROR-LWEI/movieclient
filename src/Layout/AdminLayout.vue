@@ -13,7 +13,7 @@
                 </a-menu>
             </a-layout-sider>
             <a-layout-content>
-                <div>
+                <div :class="$style.content">
                     <router-view/>
                 </div>
             </a-layout-content>
@@ -59,6 +59,10 @@ export default class AdminLayout extends Vue {
     .AdminLayout {
         padding: 20px 0;
         background-color: #fff;
+    }
+
+    .content {
+        height: 100%;
     }
 </style>
 
