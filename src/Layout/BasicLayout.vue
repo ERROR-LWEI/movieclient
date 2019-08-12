@@ -16,6 +16,9 @@
         <a-menuitem key="2">
           <router-link to="/metadata">元数据维护</router-link>
         </a-menuitem>
+        <a-menuitem>
+          <router-link to="/about">测试表单</router-link>
+        </a-menuitem>
         <a-admin @loginout="loginout" :isLogin="isLogin"/>
       </a-menu>
     </a-header>

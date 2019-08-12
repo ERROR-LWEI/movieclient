@@ -1,5 +1,4 @@
 import { RouteConfig } from 'vue-router';
-import Nation from '@/views/meta/nation/nation.vue';
 
 const MetaRouter: RouteConfig = {
     path: 'metadata',
@@ -7,9 +6,9 @@ const MetaRouter: RouteConfig = {
     component: () => import('@/views/meta/Layout/MetaLayout.vue'),
     children:[
         {
-            path: 'enum/nation',
+            path: 'nation',
             name: 'nation',
-            component: Nation
+            component: () => import('@/views/meta/enum/nation.vue')
         }
     ]
 }

@@ -7,11 +7,7 @@
                     <a-input
                         size="large"
                         v-decorator="[
-                            'account',
-                            {
-                                rules: [{ type: 'email', required: true, message: '请输入邮箱地址' }],
-                                validateTrigger: 'submit'
-                            }
+                            'username',
                         ]"
                         type="text"
                         :class="$style.formInput"
@@ -132,10 +128,11 @@ export default class Login extends Vue {
 
     public async login(param: any) {
         const res = await request({
-            api: '/api/user/login',
+            api: '/api/permission/login',
             method: 'POST',
             body: param,
         });
+        console.log(res);
         if (res.code === 1) {
             this.$router.push('/home');
         }
@@ -147,7 +144,7 @@ export default class Login extends Vue {
             if (!err) {
                 this.isLoading = true;
                 values.type = 'user';
-                values.password = encode(values.password);
+                //values.password = encode(values.password);
                 await this.login(values);
                 this.isLoading = false;
             }
